@@ -57,5 +57,6 @@ func (a *Artifact) String() string {
 	return fmt.Sprintf("Private template (UUID: %s, Title: %s, Zone: %s)",
 		strings.Join(a.UUID[:], ","),
 		strings.Join(a.Title[:], ","),
-		strings.Join(a.Zone[:], ","))
+		strings.Join(a.Zone[:], ","),
+	)
 }

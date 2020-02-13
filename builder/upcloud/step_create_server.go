@@ -31,8 +31,9 @@ func (s *StepCreateServer) Run(state multistep.StateBag) multistep.StepAction {
 	for i, zone := range config.Zone {
 		i, zone := i, zone
 		errGrp.Go(func() error {
+
 			// Create the request
-			title := fmt.Sprintf("packer-builder-upcloud-%d", time.Now().Unix())
+			title := config.TemplatePrefix
 			hostname := title
 
 			createServerRequest := request.CreateServerRequest{
@@ -40,8 +41,8 @@ func (s *StepCreateServer) Run(state multistep.StateBag) multistep.StepAction {
 				Hostname:         hostname,
 				Zone:             zone,
 				PasswordDelivery: request.PasswordDeliveryNone,
-				CoreNumber:       2,
-				MemoryAmount:     2048,
+				CoreNumber:       1,
+				MemoryAmount:     1024,
 				StorageDevices: []upcloud.CreateServerStorageDevice{
 					{
 						Action:  upcloud.CreateServerStorageDeviceActionClone,
