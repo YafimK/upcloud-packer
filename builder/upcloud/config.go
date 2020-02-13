@@ -19,11 +19,11 @@ type Config struct {
 	Comm                communicator.Config `mapstructure:",squash"`
 
 	// Required configuration values
-	Username       string `mapstructure:"username"`
-	Password       string `mapstructure:"password"`
-	Zone           string `mapstructure:"zone"`
-	StorageUUID    string `mapstructure:"storage_uuid"`
-	TemplatePrefix string `mapstructure:"template_prefix"`
+	Username       string   `mapstructure:"username"`
+	Password       string   `mapstructure:"password"`
+	Zone           []string `mapstructure:"zone"`
+	StorageUUID    string   `mapstructure:"storage_uuid"`
+	TemplatePrefix string   `mapstructure:"template_prefix"`
 
 	// Optional configuration values
 	StorageSize             int    `mapstructure:"storage_size"`
@@ -78,9 +78,9 @@ func NewConfig(raws ...interface{}) (*Config, error) {
 			errs, errors.New("\"password\" must be specified"))
 	}
 
-	if c.Zone == "" {
+	if c.Zone == nil {
 		errs = packer.MultiErrorAppend(
-			errs, errors.New("\"zone\" must be specified"))
+			errs, errors.New("at least one \"zone\" must be specified"))
 	}
 
 	if c.StorageUUID == "" {
