@@ -96,13 +96,19 @@ func (self *Builder) Run(ui packer.Ui, hook packer.Hook, cache packer.Cache) (pa
 		return nil, nil
 	}
 
-	storageDetails := rawDetails.(*upcloud.StorageDetails)
-
+	storageDetails := rawDetails.([]*upcloud.StorageDetails)
+	uuid := make([]string, len(storageDetails))
+	zone := make([]string, len(storageDetails))
+	title := make([]string, len(storageDetails))
+	for i, storage := range storageDetails {
+		uuid[i] = storage.UUID
+		zone[i] = storage.Zone
+	}
 	// Create an artifact and return it
 	artifact := &Artifact{
-		UUID:    storageDetails.UUID,
-		Zone:    storageDetails.Zone,
-		Title:   storageDetails.Title,
+		UUID:    uuid,
+		Zone:    zone,
+		Title:   title,
 		service: service,
 	}
 
